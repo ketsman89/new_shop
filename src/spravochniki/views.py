@@ -12,4 +12,9 @@ def  home_page(request):
     html += "</ul>"
     return HttpResponse(html)
 
+def view_city(request, pk):
+    cities = models.City.objects.filter(pk=int(city_pk))
+    html = f"City PK:{city.pk} City name {city.name}"
+    return HttpResponse(html)
+
 # Create your views here.

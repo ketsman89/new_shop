@@ -21,4 +21,5 @@ from spravochniki import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('spr/', views.home_page),
+    path('city/<int:pk>', views.view_city),
 ]
