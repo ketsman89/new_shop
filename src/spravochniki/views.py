@@ -2,19 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from random import randint
 from . import models
+
 def  home_page(request):
-    city_pk = request.GET.get("city")
-    print(city_pk)
-    cities = models.City.objects.filter(pk=int(city_pk))
-    html = "<ul>"
-    for city in cities:
-        html += f"<li>{city.pk} City {city.name}</li>"
-    html += "</ul>"
-    return HttpResponse(html)
+    cities = models.City.objects.filter(pk__lt=15)
+    return render(
+        request, 
+        template_name="spravochniki/home-page.html", 
+        context={'objects': cities })
 
 def view_city(request, pk):
-    cities = models.City.objects.filter(pk=int(city_pk))
-    html = f"City PK:{city.pk} City name {city.name}"
-    return HttpResponse(html)
+    print(pk)
+    city = models.City.objects.get(pk=int(pk))
+    return render(
+        request, 
+        template_name="spravochniki/view-city.html", 
+        context={'object': city })
+
+def delete_city(request, pk):
+    models.City.objects.get(pk=int(pk)).delete()
+    return HttpResponse(f"Object {pk} has been deleted")
 
 # Create your views here.

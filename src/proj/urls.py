@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('spr/', views.home_page),
     path('city/<int:pk>', views.view_city),
+    path('city-delete/<int:pk>', views.delete_city)
 ]
