@@ -10,14 +10,7 @@
     <h1>{{ greeting }}</h1>
     <form action="" method="post">
         {% csrf_token %}
-        <input type="text" name="city_name"><br>
-        <select name="region" id="">
-            <option value="">Please choose a Region</option>
-            {% for region in regions %}
-            
-            <option value="{{ region.pk }}">{{ region.name }}</option>
-            {% endfor %}
-        </select><br>
+        {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
 </body>

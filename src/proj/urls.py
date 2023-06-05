@@ -24,5 +24,7 @@ urlpatterns = [
     path('city/<int:pk>', views.view_city),
     path('city-delete/<int:pk>', views.delete_city),
     path('city-add/', views.add_city),
-    path('added/', views.success_page)
+    path('added/', views.success_page),
+    path('city-update/<int:pk>', views.update_city),
+
 ]
