@@ -1,6 +1,14 @@
 from django import forms
 from . import models
+from django.core.exceptions import ValidationError
 CHOISES = [(obj.pk, obj.name) for obj in models.Region.objects.all()]
+
+def if_microsoft(data):
+    if data[-14:] != "@microsoft.com":
+        raise ValidationError(
+            "The addres must be like this **@microsoft.com"
+        )
+
 class AddCityForm(forms.Form):
     region = forms.ChoiceField(
         choices=CHOISES,
@@ -22,3 +30,24 @@ class AddCityForm(forms.Form):
             region=region, 
             name=self.cleaned_data["name"]
         )
+    
+class CityModelForm(forms.ModelForm):
+    class Meta:
+        model = models.City
+        fields = [
+            "region", "name"
+        ]
+
+class ContactForm(forms.Form):
+    cintact_email = forms.EmailField(
+        required=True,
+        label="Pls enter your email", 
+        validators=[
+            if_microsoft
+        ]           
+    )
+    message = forms.CharField(
+        required=True,
+        label="Pls enter your message",
+        widget=forms.Textarea,
+    )

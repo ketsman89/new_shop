@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List view</title>
+</head>
+<body>
+    <!-- {{ object_list }} -->
+    <table border="1">
+        <tr>
+            <th>pk</th>
+            <th>name</th>
+            <th>Region</th>
+            <th>actions</th>
+        </tr>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{ obj.pk }}</td>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.region }}</td>
+            <td><a href="/city-update-cbv/{{ obj.pk }}">update</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

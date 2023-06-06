@@ -22,9 +22,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('spr/', views.home_page),
     path('city/<int:pk>', views.view_city),
+    path('city-cbv/<int:pk>', views.CityView.as_view()),
     path('city-delete/<int:pk>', views.delete_city),
+    path('city-list-cbv/', views.CityListView.as_view()),
+    path('city-delete-cbv/<int:pk>', views.CityDeleteView.as_view()),
     path('city-add/', views.add_city),
+    path('city-add-cbv/', views.CityCreateView.as_view()),
     path('added/', views.success_page),
     path('city-update/<int:pk>', views.update_city),
+    path('city-update-cbv/<int:pk>', views.CityUpdateView.as_view()),
+    path('send-email/', views.send_email),
+    path('', views.HomePage.as_view()),
 
 ]

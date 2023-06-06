@@ -1,9 +1,39 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views import generic
 from random import randint
 from . import models
 from . import forms
 
+
+class HomePage(generic.TemplateView):
+    template_name = "spravochniki/home-page.html",
+
+class CityView(generic.DetailView):
+    model = models.City
+
+class CityListView(generic.ListView):
+    model = models.City
+    paginate_by = 20
+
+
+class CityCreateView(generic.CreateView):
+    model = models.City
+    fields = [
+            "region", "name"
+        ]
+    template_name = "spravochniki/add-city.html"
+
+class CityUpdateView(generic.UpdateView):
+    model = models.City
+    form_class = forms.CityModelForm
+    template_name = "spravochniki/add-city.html"
+    # success_url = "/added"
+
+class CityDeleteView(generic.DeleteView):
+    model = models.City
+    template_name = "spravochniki/delete-city.html"
+    success_url = "/"
 
 def  home_page(request):
     cities = models.City.objects.filter(pk__lt=15)
@@ -25,24 +55,22 @@ def delete_city(request, pk):
     return HttpResponse(f"Object {pk} has been deleted")
 
 def add_city(request):
-    regions = models.Region.objects.all()    
     if request.method == "GET":
-        form = forms.AddCityForm()
+        form = forms.CityModelForm()
         return render(
             request,
             template_name="spravochniki/add-city.html",
-        context={"regions": regions, 
-                 "greeting": "Add a new city please!", 
+        context={"greeting": "Add a new city please!", 
                  "form": form})
     else:
-        city_form = forms.AddCityForm(request.POST)
+        city_form = forms.CityModelForm(request.POST)
         if city_form.is_valid():
             new_city = city_form.save()
         else:
            return render(
                 request,
                 template_name="spravochniki/add-city.html",
-            context={"regions": regions, 
+            context={
                      "greeting": "Add a new city please!", 
                      "form": form}) 
         print("Is bound?", city_form.is_bound)
@@ -73,5 +101,26 @@ def success_page(request):
         template_name="spravochniki/added-successfully.html",
         context={"message": f"The object was created"})
 
+def send_email(request):
+    if request.method == "GET":
+        form = forms.ContactForm()
+        return render(
+            request,
+            template_name="spravochniki/send-email.html",
+            context={"form": form}
+        )
+    else:
+        form = forms.ContactForm(request.POST)
+        if form.is_valid():
+            form.send_email()
+            return HttpResponseRedirect("/added")
+        else:
+           return render(
+                request,
+                template_name="spravochniki/send-email.html",
+            context={"form": form}) 
+    # def send_email(self):
+    #     contact_email=self.cleaned_data["contact_email"]
+    #     massage=self.cleaned_data["massage"]
 
 # Create your views here.
