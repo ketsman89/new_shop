@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add city</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block TITLE %}City ADD{% endblock TITLE %}
+
+{% block BODY %}
     <h1>{{ greeting }}</h1>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Submit</button>
     </form>
-</body>
-</html>
+{% endblock BODY %}

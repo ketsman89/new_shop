@@ -1,5 +1,7 @@
 from typing import Set
 from django.db import models
+from django.urls import reverse_lazy
+
 
 # Create your models here.
 
@@ -56,8 +58,10 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+        
     
     def get_absolute_url(self):
+        return reverse_lazy('spravochniki:view-city', kwargs={"pk": self.pk})
         return f"/city-cbv/{self.pk}"
     
 class PublicHolidays(models.Model):

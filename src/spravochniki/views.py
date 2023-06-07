@@ -5,9 +5,9 @@ from random import randint
 from . import models
 from . import forms
 
-
-class HomePage(generic.TemplateView):
-    template_name = "spravochniki/home-page.html",
+# ccbv.co.uk шаблоны
+# class HomePage(generic.TemplateView):
+#     template_name = "spravochniki/home-page.html",
 
 class CityView(generic.DetailView):
     model = models.City

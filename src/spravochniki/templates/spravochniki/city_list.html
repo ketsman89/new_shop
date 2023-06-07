@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List view</title>
-</head>
-<body>
-    <!-- {{ object_list }} -->
-    <table border="1">
-        <tr>
-            <th>pk</th>
-            <th>name</th>
-            <th>Region</th>
-            <th>actions</th>
-        </tr>
-        {% for obj in object_list %}
-        <tr>
-            <td>{{ obj.pk }}</td>
-            <td>{{ obj.name }}</td>
-            <td>{{ obj.region }}</td>
-            <td><a href="/city-update-cbv/{{ obj.pk }}">update</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block TITLE %}City list{% endblock TITLE %}
+
+{% block BODY %}
+<table border="1">
+    <tr>
+        <th>pk</th>
+        <th>name</th>
+        <th>Region</th>
+        <th>actions</th>
+    </tr>
+    {% for obj in object_list %}
+    <tr>
+        <td>{{ obj.pk }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.region }}</td>
+        <td>
+            <a href="{% url 'spravochniki:update-city' pk=obj.pk %}">update</a>
+            <a href="{% url 'spravochniki:view-city' pk=obj.pk %}">view</a>
+            <a href="{% url 'spravochniki:delete-city' pk=obj.pk %}">delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock BODY %}
